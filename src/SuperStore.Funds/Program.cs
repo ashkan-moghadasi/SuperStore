@@ -1,9 +1,14 @@
+using SuperStore.Funds.Messages;
+using SuperStore.Shared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMessaging();
 
 var app = builder.Build();
 
@@ -35,6 +40,11 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
+app.MapGet("/messages/send", async (IMessagePublisher messagePublisher) =>
+{
+    var fundMessage = new FundsMessage(123,10.34m);
+    await messagePublisher.PublishAsync("Funds", "FundsMessage", fundMessage);
+});
 app.Run();
 
 internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)

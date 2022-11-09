@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Connections\" />
+    <Folder Include="Subscribers\" />
     <Folder Include="Publishers\" />
   </ItemGroup>
 

@@ -18,6 +18,7 @@ internal class MessagePublisher : IMessagePublisher
         var json = JsonSerializer.Serialize(message);
         var body=Encoding.UTF8.GetBytes(json);
         var properties = _channel.CreateBasicProperties();
+        _channel.ExchangeDeclare(exchange,"topic",false,false);
         _channel.BasicPublish(exchange,routingKey,properties,body);
         return Task.CompletedTask;
     }

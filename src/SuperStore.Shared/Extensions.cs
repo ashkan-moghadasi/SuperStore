@@ -2,6 +2,7 @@
 using RabbitMQ.Client;
 using SuperStore.Shared.Connections;
 using SuperStore.Shared.Publishers;
+using SuperStore.Shared.Subscribers;
 
 namespace SuperStore.Shared
 {
@@ -11,7 +12,9 @@ namespace SuperStore.Shared
         {
             var connectionFactory = new ConnectionFactory()
             {
-                HostName = "LocalHost"
+                HostName = "LocalHost",
+                VirtualHost = "/"
+                
             };
             var connection = connectionFactory.CreateConnection();
             
@@ -19,6 +22,7 @@ namespace SuperStore.Shared
             services.AddSingleton<ChannelAccessor>();
             services.AddSingleton<IChannelFactory, ChannelFactory>();
             services.AddSingleton<IMessagePublisher, MessagePublisher>();
+            services.AddSingleton<IMessageSubscriber, MessageSubscriber>();
             return services;
         }
 
